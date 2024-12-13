@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { motivationLetterSchema } from "@/lib/schemas";
 import { generateLetter } from "@/lib/api-client";
 import { useToast } from "@/hooks/use-toast";
+import { jsPDF } from "jspdf"; // Import jsPDF
 import type { MotivationLetterData } from "@/lib/types";
 import type * as z from "zod";
 
@@ -58,6 +59,17 @@ export function MotivationLetterForm() {
       title: "Copié !",
       description: "La lettre a été copiée dans le presse-papier.",
     });
+  };
+
+  // Fonction pour générer le PDF
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Ajouter le contenu de la lettre au PDF
+    doc.text(generatedLetter, 10, 10);
+
+    // Télécharger le PDF
+    doc.save("lettre_de_motivation.pdf");
   };
 
   return (
@@ -180,6 +192,15 @@ export function MotivationLetterForm() {
                 onClick={handleCopyToClipboard}
               >
                 Copier la lettre
+              </Button>
+
+              {/* Bouton pour télécharger la lettre en PDF */}
+              <Button
+                className="mt-4 w-full"
+                
+                onClick={handleDownloadPDF}
+              >
+                Télécharger la lettre en PDF
               </Button>
             </div>
           )}

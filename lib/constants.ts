@@ -1,7 +1,7 @@
 export const OPENAI_CONFIG = {
-  model: "gpt-3.5-turbo",
+  model: process.env.NODE_ENV === "development" ? "gpt-3.5-turbo" : "gpt-4",
+  max_tokens: process.env.NODE_ENV === "development" ? 100 : 300,
   temperature: 0.7,
-  max_tokens: 1000,
 };
 
 export const SYSTEM_PROMPT = 
